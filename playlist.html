@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'ArcadeClassic';
+            src: url('ArcadeClassic.ttf') format('truetype');
+        }
+        body {
+            background: url('data/img/PlaylistBackground.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'ArcadeClassic', sans-serif;
+            position: relative;
+        }
+        .music-player {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 50px;
+            height: auto;
+        }
+        .song-title {
+            font-size: 18px;
+            margin: 10px 0;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <a href="game.html" class="back-button">
+        <img src="data/img/return.png" alt="Back">
+    </a>
+    <div class="music-player">
+        <img id="album-art" src="data/img/cover.jpg" alt="Album Art" width="450">
+        <div class="song-title" id="song-title">Loading...</div>
+        <audio id="audio-player" controls>
+            <source id="audio-source" src="" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <button onclick="prevSong()">⏮</button>
+        <button onclick="playPause()">▶️/⏸</button>
+        <button onclick="nextSong()">⏭</button>
+    </div>
+    <script>
+        const songs = [
+            { name: "ROI TA SE NGAM PHAO HOA CUNG NHAU", file: "data/music/RỒI TA SẼ NGẮM PHÁO HOA CÙNG NHAU  MV OFFICIAL  O.lew - Olew Thích Hát.mp3" },
+            { name: "EM KHONG HIEU - CHANG Official Video", file: "data/music/Changg  Em Không Hiểu  Official Video (ft Minh Huy) - Fillinus Entertainment.mp3" },
+            { name: "SAU CON MUA - COOLKID (ft. RHYDER)", file: "data/music/COOLKID - SAU CƠN MƯA (ft. RHYDER) - COOLKID OFFICIAL.mp3" },
+            { name: "EM CO NGHE - KHA", file: "data/music/Em Có Nghe - Kha - Kha.mp3" },
+            { name: "CHO TOI TINH YEU - DENN", file: "data/music/CHO TÔI T̀NH YÊU - Denn ( Prod.by MinhTan) - Denn.mp3" },
+            { name: "PHAI CHANG EM DA YEU - JYKY SAN X REDT", file: "data/music/JUKY SAN X REDT  PHẢI CHĂNG EM ĐÃ YÊU   OFFICIAL MUSIC VIDEO - Juky San.mp3" },
+            { name: "PHUT BAN DAU - VU (ORIGINAL)", file: "data/music/Vũ. - Phút Ban Đầu (The Original 2014 Version) Lyrics Video - Vũ Official.mp3" },
+            { name: "LA LUNG - VU (ORIGINAL)", file: "data/music/LẠ LÙNG _ Vũ. (Original) - Vũ Official.mp3" },
+            { name: "KARIK - BAN DOI (FT. GDUCKY)", file: "data/music/KARIK - BẠN ĐỜI (FT. GDUCKY)  OFFICIAL MUSIC VIDEO - KARIK.mp3" },
+            { name: "DUONG DOMIC - MAT KET NOI", file: "data/music/Dương Domic - Mất Kết Nối  EP 'Dữ Liệu Quý' - Dương Domic.mp3" },
+            { name: "DUONG DO MIC - TRAN BO NHO", file: "data/music/Dương Domic - Tràn Bộ Nhớ  EP 'Dữ Liệu Quý' - Dương Domic.mp3" },
+            { name: "HOANG DUNG - KE HOACH YEU (LIVE SESSION)", file: "data/music/Kế Hoạch Yêu  Hoàng Dũng Live Session EP.11 - Hoàng Dũng.mp3" },
+            { name: "HIEUTHUHAI - KHONG THE SAY", file: "data/music/HIEUTHUHAI - Không Thể Say (prod. by Kewtiie) l Official Video - HIEUTHUHAI.mp3" },
+            { name: "HIEUTHUHAI - EXIT SIGN (PROD. BY KEWTIIE FT. MARZUZ)", file: "data/music/HIEUTHUHAI - Exit Sign (prod. by Kewtiie) ft. marzuz [Official Lyric Video] - HIEUTHUHAI.mp3" },
+            { name: "ME YEU CON - NHA TINH HOA", file: "data/music/【COLOR-CODED LYRICS】Mẹ Yêu Con - Nhà Tinh Hoa  Anh Trai Vượt Ngàn Chông Gai - Miyabe Kadotani.mp3" },
+            { name: "HAO QUANG - RHYDER, DUONG DOMIC, PHAP KIEU", file: "data/music/RHYDER, Dương Domic, Pháp Kiều - HÀO QUANG I OFFICIAL LYRICS VIDEO - RHYDER OFFICIAL.mp3" }
+        ];
+
+        let currentSongIndex = 0;
+        const audioPlayer = document.getElementById("audio-player");
+        const songTitle = document.getElementById("song-title");
+
+        function loadSong(index) {
+            if (index >= 0 && index < songs.length) {
+                const song = songs[index];
+                songTitle.textContent = song.name;
+                audioPlayer.src = song.file;
+                audioPlayer.play();
+            }
+        }
+
+        function playPause() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+            } else {
+                audioPlayer.pause();
+            }
+        }
+
+        function nextSong() {
+            currentSongIndex = (currentSongIndex + 1) % songs.length;
+            loadSong(currentSongIndex);
+        }
+
+        function prevSong() {
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            loadSong(currentSongIndex);
+        }
+
+        audioPlayer.addEventListener("ended", nextSong);
+
+        window.onload = () => loadSong(currentSongIndex);
+
+    </script>
+</body>
+</html>

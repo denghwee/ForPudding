@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'ArcadeClassic';
+            src: url('ArcadeClassic.ttf') format('truetype');
+        }
+        body {
+            background: url('data/img/MessageBackground.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'ArcadeClassic', sans-serif;
+        }
+        .speech-bubble {
+            background: white;
+            border: 4px solid black;
+            padding: 20px;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            font-size: 18px;
+            color: black;
+        }
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 10px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+        }
+        .back-button img {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <a href="game.html" class="back-button">
+        <img src="data/img/return.png" alt="Back">
+    </a>
+    <div class="speech-bubble">
+        <p>ALLL000 ENENGI, Ten years of friendship feels like both yesterday and a lifetime ago. Through it all, you've been my rock, my partner-in-crime, and my shoulder to cry on. We've come a long way since then, but one thing's for sure: your unwavering support, infectious laughter, and ability to comfort me have made all the difference. Thank you for being you, and for being the best friend a person could ask for. Thank you for everything, for the laughter, the tears, and the countless memories we've made together. Here's to many more adventures, crazy stories, and memories we'll cherish forever!</p>
+    </div>
+</body>
+</html>
